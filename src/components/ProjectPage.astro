@@ -1,0 +1,57 @@
+---
+const { project } = Astro.props;
+const imageList = project.images?.length ? project.images : ['/images/placeholder.svg'];
+---
+
+<section class="project-page">
+  <header class="project-hero">
+    <h1>{project.title}</h1>
+    <p class="lead">{project.short}</p>
+  </header>
+
+  <div class="project-grid">
+    <aside class="project-meta">
+      <h4>Role</h4>
+      <p>{project.role}</p>
+
+      <h4>Tools</h4>
+      <ul>
+        {project.tools?.map(tool => <li>{tool}</li>)}
+      </ul>
+    </aside>
+
+    <article class="project-content">
+      <h3>Overview</h3>
+      <p>{project.short}</p>
+
+      <h3>Problem</h3>
+      <p>{project.problem}</p>
+
+      <h3>Process</h3>
+      <p>{project.process}</p>
+
+      <h3>Final Solution</h3>
+      <p>{project.solution}</p>
+
+      <h3>Images</h3>
+      <div class="project-images">
+        {imageList.map(src => (
+          <img src={src} alt={`${project.title} screenshot`} loading="lazy" />
+        ))}
+      </div>
+
+      {project.projectUrl ? (
+        <div class="project-link-row">
+          <a class="btn" href={project.projectUrl} target="_blank" rel="noreferrer noopener">
+            Open live project
+          </a>
+        </div>
+      ) : null}
+
+      <h3>Reflection</h3>
+      <p>{project.reflection}</p>
+
+      <slot />
+    </article>
+  </div>
+</section>

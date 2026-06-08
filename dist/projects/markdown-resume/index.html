@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Markdown Resume</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/styles.css"></head> <body> <header class="site-header" id="top"> <div class="container header-row"> <a class="logo" href="#top"> <img id="themeLogo" class="nav-logo" src="/images/logos/Logo+Logomark-black-horizontal.png" alt="Portfolio logo" loading="lazy"> </a> <div class="nav-group"> <nav class="nav"> <a href="#projects">Projects</a> <a href="#about">About</a> <a href="#contact">Contact</a> </nav> <button class="theme-toggle" type="button" aria-label="Toggle theme">🌙</button> </div> </div> </header> <main class="container"> <section class="project-page"> <header class="project-hero"> <h1>Markdown Resume</h1> <p class="lead">A resume generated from Markdown and styled for web presentation.</p> </header> <div class="project-grid"> <aside class="project-meta"> <h4>Role</h4> <p>Content &amp; Web Publication</p> <h4>Tools</h4> <ul> <li>Markdown</li><li>HTML</li><li>CSS</li> </ul> </aside> <article class="project-content"> <h3>Overview</h3> <p>A resume generated from Markdown and styled for web presentation.</p> <h3>Problem</h3> <p>Make resume content easy to update while keeping a bold visual style.</p> <h3>Process</h3> <p>Use Markdown as the source of truth and publish a formatted PDF/Web view.</p> <h3>Final Solution</h3> <p>A clean resume workflow that can be edited in plain text and previewed in the browser.</p> <h3>Images</h3> <div class="project-images"> <img src="/images/placeholder.svg" alt="Markdown Resume screenshot" loading="lazy"> </div> <div class="project-link-row"> <a class="btn" href="https://valdezizzy.github.io/markdown-resume/ValdezIsabella.pdf" target="_blank" rel="noreferrer noopener">
+Open live project
+</a> </div> <h3>Reflection</h3> <p>This approach makes resume updates fast, while preserving a custom portfolio presentation.</p>  <h3 id="overview">Overview</h3>
+<p>This project uses Markdown-based content so updates are simple and maintainable.</p>
+<h3 id="details">Details</h3>
+<p>Add notes on the resume structure, layout choices, or how you want viewers to interact with the PDF link.</p>  </article> </div> </section> </main> <footer class="site-footer"> <div class="container">© 2026 Your Name</div> </footer> <script type="module">
+      const headerLogo = document.querySelector('#themeLogo');
+      const themeToggle = document.querySelector('.theme-toggle');
+      const setTheme = (mode) => {
+        document.documentElement.classList.toggle('dark', mode === 'dark');
+        if (themeToggle) themeToggle.textContent = mode === 'dark' ? '☀️' : '🌙';
+        if (headerLogo) {
+          headerLogo.src = mode === 'dark'
+            ? '/images/logos/Logo+Logomark-white-horizontal.png'
+            : '/images/logos/Logo+Logomark-black-horizontal.png';
+        }
+      };
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          localStorage.setItem('theme', nextTheme);
+          setTheme(nextTheme);
+        });
+      }
+      const handleScroll = () => {
+        if (!headerLogo) return;
+        headerLogo.classList.toggle('visible', window.scrollY > 80);
+      };
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('load', handleScroll);
+    </script> </body> </html>

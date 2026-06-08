@@ -1,0 +1,86 @@
+---
+const { title = 'Portfolio' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <div class="container header-row">
+        <a class="logo" href="/#top">
+          <img id="themeLogo" class="nav-logo" src="/images/logos/Logo+Logomark-black-horizontal.png" alt="Portfolio logo" loading="lazy" />
+        </a>
+        <div class="nav-group">
+          <nav class="nav">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <button class="theme-toggle" type="button" aria-label="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© {new Date().getFullYear()} Izzy Valdez</div>
+    </footer>
+    <script type="module">
+      // Handle smooth scroll for nav links
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          let href = link.getAttribute('href');
+          // Handle both #id and /#id formats
+          if (href.startsWith('/#')) href = href.slice(1);
+          if (href === '#') return;
+          
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      const headerLogo = document.querySelector('#themeLogo');
+      const themeToggle = document.querySelector('.theme-toggle');
+      const setTheme = (mode) => {
+        document.documentElement.classList.toggle('dark', mode === 'dark');
+        if (themeToggle) themeToggle.textContent = mode === 'dark' ? '☀️' : '🌙';
+        if (headerLogo) {
+          headerLogo.src = mode === 'dark'
+            ? '/images/logos/Logo+Logomark-white-horizontal.png'
+            : '/images/logos/Logo+Logomark-black-horizontal.png';
+        }
+      };
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          localStorage.setItem('theme', nextTheme);
+          setTheme(nextTheme);
+        });
+      }
+      const handleScroll = () => {
+        if (!headerLogo) return;
+        headerLogo.classList.toggle('visible', window.scrollY > 80);
+      };
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('load', handleScroll);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectPage from '../../components/ProjectPage.astro';
+
+export function getStaticPaths() {
+  const modules = import.meta.glob('../../content/projects/*.md', { eager: true });
+  return Object.values(modules).map(m => ({ params: { slug: m.frontmatter.slug } }));
+}
+
+const { slug } = Astro.params;
+const modules = import.meta.glob('../../content/projects/*.md', { eager: true });
+const entries = Object.values(modules).map(m => ({ frontmatter: m.frontmatter, Component: m.default }));
+const entry = entries.find(e => e.frontmatter.slug === slug);
+const project = entry?.frontmatter;
+---
+
+<BaseLayout title={project ? project.title : 'Not Found'}>
+  {project ? (
+    <ProjectPage project={project}>
+      <entry.Component />
+    </ProjectPage>
+  ) : (
+    <section>
+      <h2>Project not found</h2>
+      <p>Check your `src/content/projects/` for the correct `slug`.</p>
+    </section>
+  )}
+</BaseLayout>

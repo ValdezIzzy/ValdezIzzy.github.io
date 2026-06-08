@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Scrollytelling Comic Coding</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/styles.css"></head> <body> <header class="site-header" id="top"> <div class="container header-row"> <a class="logo" href="#top"> <img id="themeLogo" class="nav-logo" src="/images/logos/Logo+Logomark-black-horizontal.png" alt="Portfolio logo" loading="lazy"> </a> <div class="nav-group"> <nav class="nav"> <a href="#projects">Projects</a> <a href="#about">About</a> <a href="#contact">Contact</a> </nav> <button class="theme-toggle" type="button" aria-label="Toggle theme">🌙</button> </div> </div> </header> <main class="container"> <section class="project-page"> <header class="project-hero"> <h1>Scrollytelling Comic Coding</h1> <p class="lead">An interactive webcomic built to teach coding through scrolling narrative.</p> </header> <div class="project-grid"> <aside class="project-meta"> <h4>Role</h4> <p>Creator &amp; Developer</p> <h4>Tools</h4> <ul> <li>HTML</li><li>CSS</li><li>JavaScript</li> </ul> </aside> <article class="project-content"> <h3>Overview</h3> <p>An interactive webcomic built to teach coding through scrolling narrative.</p> <h3>Problem</h3> <p>Make coding lessons feel like a story rather than a lesson plan.</p> <h3>Process</h3> <p>Use scroll-triggered animations and narrative panels to guide the reader.</p> <h3>Final Solution</h3> <p>A scrolling comic interface that reveals ideas with motion and browser-style presentation.</p> <h3>Images</h3> <div class="project-images"> <img src="/images/placeholder.svg" alt="Scrollytelling Comic Coding screenshot" loading="lazy"> </div> <div class="project-link-row"> <a class="btn" href="https://valdezizzy.github.io/scrollytelling-comic-coding-izzy/" target="_blank" rel="noreferrer noopener">
+Open live project
+</a> </div> <h3>Reflection</h3> <p>This project blends storytelling with code and shows how animation can make concepts stick.</p>  <h3 id="overview">Overview</h3>
+<p>This is a sample project written in Markdown. Use the frontmatter at the top to populate the project metadata (title, image, role, tools, etc.).</p>
+<h3 id="details">Details</h3>
+<p>Write additional narrative here — process notes, screenshots, or links. The Markdown body will render inside the universal <code>ProjectPage</code> layout so you don’t need to duplicate structure.</p>  </article> </div> </section> </main> <footer class="site-footer"> <div class="container">© 2026 Your Name</div> </footer> <script type="module">
+      const headerLogo = document.querySelector('#themeLogo');
+      const themeToggle = document.querySelector('.theme-toggle');
+      const setTheme = (mode) => {
+        document.documentElement.classList.toggle('dark', mode === 'dark');
+        if (themeToggle) themeToggle.textContent = mode === 'dark' ? '☀️' : '🌙';
+        if (headerLogo) {
+          headerLogo.src = mode === 'dark'
+            ? '/images/logos/Logo+Logomark-white-horizontal.png'
+            : '/images/logos/Logo+Logomark-black-horizontal.png';
+        }
+      };
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          localStorage.setItem('theme', nextTheme);
+          setTheme(nextTheme);
+        });
+      }
+      const handleScroll = () => {
+        if (!headerLogo) return;
+        headerLogo.classList.toggle('visible', window.scrollY > 80);
+      };
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('load', handleScroll);
+    </script> </body> </html>

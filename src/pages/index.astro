@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+// Load markdown project files from `src/content/projects`.
+const modules = import.meta.glob('../content/projects/*.md', { eager: true });
+const projects = Object.values(modules).map(m => ({ ...m.frontmatter }));
+---
+
+<BaseLayout title="Portfolio">
+  <section class="hero hero-home">
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">Portfolio</span>
+        <h1 class="hero-title">Isabella Valdez</h1>
+        <p class="hero-subtitle">Grunge-inspired case studies, bold visuals, and a system-built project showcase with Markdown-driven pages.</p>
+      </div>
+      <div class="hero-logo-wrap">
+        <img class="hero-logo" src="/images/logos/Logo-white.png" alt="Portfolio logo" />
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">About</span>
+        <h2>Bold visual systems with a grunge edge</h2>
+      </div>
+    </div>
+    <p class="lead">I design portfolio work that feels sharp, immersive, and intentionally raw. Every case study is built to showcase strong storytelling, texture, and polished visual hierarchy.</p>
+  </section>
+
+  <section class="projects" id="projects">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Work</span>
+        <h2>Featured case studies</h2>
+      </div>
+    </div>
+    <div class="grid">
+      {projects.map(project => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h2>Start the conversation</h2>
+      </div>
+    </div>
+
+    <p class="lead">
+      Interested in a project, collaboration, or just want to connect? Reach out through any of the channels below.
+    </p>
+
+    <div>
+      <p>
+        <strong>Email:</strong>
+        <a href="mailto:izzyval2005@gmail.com">izzyval2005@gmail.com</a>
+      </p>
+
+      <p>
+        <strong>Instagram:</strong>
+        <a href="https://www.instagram.com/i22y_v/" target="_blank" rel="noopener noreferrer">
+          @i22y_v
+        </a>
+      </p>
+
+      <p>
+        <strong>GitHub:</strong>
+        <a href="https://github.com/ValdezIzzy" target="_blank" rel="noopener noreferrer">
+          github.com/ValdezIzzy
+        </a>
+      </p>
+
+      <p>
+        <strong>LinkedIn:</strong>
+        <a href="https://www.linkedin.com/in/isabella-valdez-17816336b/" target="_blank" rel="noopener noreferrer">
+          Isabella Valdez
+        </a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

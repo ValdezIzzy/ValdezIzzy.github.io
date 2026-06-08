@@ -1,0 +1,30 @@
+---
+const { project } = Astro.props;
+const windowUrl = project.projectUrl || 'https://example.com';
+const displayUrl = windowUrl.replace(/^https?:\/\//, '');
+---
+<article class="card project-card">
+  <a class="card-link" href={`/projects/${project.slug}/`} aria-label={`Open ${project.title}`}>
+    <div class="card-window">
+      <div class="window-toolbar">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="window-url">{displayUrl}</span>
+      </div>
+      <div class="window-screen">
+        <div class="window-stage">
+          <span class="window-label">Live preview</span>
+          <span class="window-link">{displayUrl}</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 class="title">{project.title}</h3>
+      <p class="desc">{project.short}</p>
+      <div class="meta">
+        <span class="category">{project.category}</span>
+      </div>
+    </div>
+  </a>
+</article>
