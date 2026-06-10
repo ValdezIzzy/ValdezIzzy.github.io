@@ -18,11 +18,19 @@ const imageList = project.images?.length ? project.images : ['/images/placeholde
       <ul>
         {project.tools?.map(tool => <li>{tool}</li>)}
       </ul>
+
+      {project.projectUrl ? (
+        <div class="project-link-row">
+          <a class="btn" href={project.projectUrl} target="_blank" rel="noreferrer noopener">
+            Open live project
+          </a>
+        </div>
+      ) : null}
     </aside>
 
     <article class="project-content">
       <h3>Overview</h3>
-      <p>{project.short}</p>
+      <p>{project.overview}</p>
 
       <h3>Problem</h3>
       <p>{project.problem}</p>
@@ -34,19 +42,11 @@ const imageList = project.images?.length ? project.images : ['/images/placeholde
       <p>{project.solution}</p>
 
       <h3>Images</h3>
-      <div class="project-images">
+      <div class={`project-images ${imageList.length === 1 ? 'single-image' : ''}`}>
         {imageList.map(src => (
           <img src={src} alt={`${project.title} screenshot`} loading="lazy" />
-        ))}
+         ))}
       </div>
-
-      {project.projectUrl ? (
-        <div class="project-link-row">
-          <a class="btn" href={project.projectUrl} target="_blank" rel="noreferrer noopener">
-            Open live project
-          </a>
-        </div>
-      ) : null}
 
       <h3>Reflection</h3>
       <p>{project.reflection}</p>
