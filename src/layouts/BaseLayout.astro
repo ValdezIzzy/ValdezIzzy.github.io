@@ -8,8 +8,8 @@ const { title = 'Isabella Valdez | Portfolio' } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Portfolio of Isabella Valdez, a Visual Communication Designer specializing in UX, illustration, and front-end development."
 />
-    <title>{title}</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Isabella Valdez | Portfolio</title>
+    <link rel="icon" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -40,16 +40,28 @@ const { title = 'Isabella Valdez | Portfolio' } = Astro.props;
     <footer class="site-footer">
       <div class="container">© {new Date().getFullYear()} Izzy Valdez</div>
     </footer>
+
+    <button id="backToTop" aria-label="Back to top">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5L5 12M12 5L19 12M12 5V19"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+      </svg>
+    </button>
+
     <script type="module">
-      // Handle smooth scroll for nav links
+      // Smooth scroll for nav links
       document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', (e) => {
           let href = link.getAttribute('href');
-          // Handle both #id and /#id formats
+
           if (href.startsWith('/#')) href = href.slice(1);
           if (href === '#') return;
-          
+
           const target = document.querySelector(href);
+
           if (target) {
             e.preventDefault();
             target.scrollIntoView({ behavior: 'smooth' });
@@ -57,33 +69,76 @@ const { title = 'Isabella Valdez | Portfolio' } = Astro.props;
         });
       });
 
+      // Theme toggle + logo swap
       const headerLogo = document.querySelector('#themeLogo');
       const themeToggle = document.querySelector('.theme-toggle');
+
       const setTheme = (mode) => {
         document.documentElement.classList.toggle('dark', mode === 'dark');
-        if (themeToggle) themeToggle.textContent = mode === 'dark' ? '☀️' : '🌙';
+
+        if (themeToggle) {
+          themeToggle.textContent = mode === 'dark' ? '☀️' : '🌙';
+        }
+
         if (headerLogo) {
           headerLogo.src = mode === 'dark'
             ? '/images/logos/Logo+Logomark-white-horizontal.png'
             : '/images/logos/Logo+Logomark-black-horizontal.png';
         }
       };
+
       const storedTheme = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
       setTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+
       if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-          const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          const nextTheme =
+            document.documentElement.classList.contains('dark')
+              ? 'light'
+              : 'dark';
+
           localStorage.setItem('theme', nextTheme);
           setTheme(nextTheme);
         });
       }
+
+      // Header logo visibility
       const handleScroll = () => {
         if (!headerLogo) return;
-        headerLogo.classList.toggle('visible', window.scrollY > 80);
+        headerLogo.classList.toggle('visible', window.scrollY > 500);
       };
+
       window.addEventListener('scroll', handleScroll);
       window.addEventListener('load', handleScroll);
+
+      // Back to top button
+      const backToTopButton = document.getElementById('backToTop');
+
+      function toggleBackToTopButton() {
+        if (!backToTopButton) return;
+
+        if (window.scrollY > 300) {
+          backToTopButton.style.opacity = '1';
+          backToTopButton.style.visibility = 'visible';
+        } else {
+          backToTopButton.style.opacity = '0';
+          backToTopButton.style.visibility = 'hidden';
+        }
+      }
+
+      window.addEventListener('scroll', toggleBackToTopButton);
+      window.addEventListener('load', toggleBackToTopButton);
+
+      if (backToTopButton) {
+        backToTopButton.addEventListener('click', () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
     </script>
   </body>
 </html>
